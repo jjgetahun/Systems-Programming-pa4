@@ -47,14 +47,14 @@ typedef struct TokenizerT_ TokenizerT;
 TokenizerT *TKCreate( char * ts ) {
     char copy[strlen(ts)]; 					//copy of string ts
     strcpy(copy,ts);
-    
+
     TokenizerT *ptr = (TokenizerT*) malloc (sizeof(struct TokenizerT_));   //Allocation of size for TokenizerT_
     ptr -> i = 0;
     ptr -> stringSize = strlen(copy);
     ptr -> myString = strdup(copy);
-    
+
     pc = (ptr -> myString);
-    
+
     return ptr;           /*returning the pointer*/
 }
 
@@ -94,7 +94,7 @@ int isZeroLetterOrNot(char x) {
         temp_State = malformed;
         malChar(x);
     }
-    
+
     return 0;
 }
 
@@ -128,15 +128,15 @@ char *TKGetNextToken( TokenizerT * tk ) {
         TKDestroy(tk);
         exit (0);
     }
-    
+
     char* token = (char*) malloc (((tk -> stringSize)+2)*sizeof(char));
     char* tempToken = (char*) malloc(sizeof(char*));
     tempToken = token;
-    
+
     while (isspace(*pc)) {
         pc++;
     }
-    
+
     if (*pc == '\0' && onlySpaces == 0) {
         printf("Only whitespace entered\n");
         TKDestroy (tk);
@@ -146,11 +146,11 @@ char *TKGetNextToken( TokenizerT * tk ) {
         TKDestroy (tk);
         exit(0);
     }
-    
+
     onlySpaces++;			//only if a nonspace is found;
-    
+
     curr_State = undetermined;
-    
+
     while (*pc != '\0') {
         if ((curr_State != done)&&(curr_State != undetermined)) {
             *token = *pc;
@@ -190,14 +190,8 @@ char* TKGetState(char* token) {
             break;
         }
         case (isAlphaNumeric): {
-            if (isJavaKeyword(token) == 1){
-                return "C KEYWORD";
-                break;
-            }
-            else {
-                return "WORD";
-                break;
-            }
+            return "WORD";
+            break;
         }
         default:
             break;
@@ -214,25 +208,39 @@ char* TKGetState(char* token) {
 
 int main(int argc, char **argv) {
     if (argc == 1 || argv[1][0] == '\0') {									//in case no arguments are given
-        fprintf(stdout,"No arguments given!\n");
-        return 0;
+        fprintf(stderr, "No arguments given!\n");
+        exit(1);
     }
-    
-    TokenizerT *tokenizer = TKCreate (argv[1]);        //creation of tokenizerT	
-    curr_State = undetermined;	
-    char* token;
-    
-    while (*tokenizer->myString != '\0') {
-        token = TKGetNextToken(tokenizer);
-        if (temp_State != isMultiComment && temp_State != isSingleComment && temp_State !=isEOC) { 
+
+    else if (argc > 2) {
+        fprintf(stderr, "Too many arguments given!\n");
+        exit(1);
+    }
+
+    else {
+
+        FILE * file = fopen(argv[1], "r");
+
+        if (file == NULL) {
+            fprintf(stderr, "The given argument is not a file!\n");
+            exit(1);
+        }
+
+        TokenizerT *tokenizer = TKCreate (argv[1]);        //creation of tokenizerT
+        curr_State = undetermined;
+        char* token;
+
+        while (*tokenizer->myString != '\0') {
+            token = TKGetNextToken(tokenizer);
             char* status = TKGetState(token);
             fprintf(stdout,"%s: %s ",status,token);
             if (temp_State == malformed) {
                 fprintf(stdout,"Error caused by: [0x%x]",err);
             }
             printf("\n");
+
         }
+        TKDestroy(tokenizer);
     }
-    TKDestroy(tokenizer);
     return 0;
 }
