@@ -226,7 +226,14 @@ int main(int argc, char **argv) {
             exit(1);
         }
 
-        TokenizerT *tokenizer = TKCreate (argv[1]);        //creation of tokenizerT
+       //char * str;
+
+        char str[30];
+        char str2[30];
+
+        fscanf(file, "%s %s", str, str2);
+
+        TokenizerT *tokenizer = TKCreate (str);        //creation of tokenizerT
         curr_State = undetermined;
         char* token;
 
