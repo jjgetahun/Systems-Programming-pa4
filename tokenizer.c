@@ -13,7 +13,6 @@
 
 enum states {
     undetermined,			//The begining of a token
-    malformed,
     isAlphaNumeric, //Once a letter is found, it will be a word no matter what.
     done,
 } curr_State, temp_State;
@@ -76,12 +75,6 @@ void TKDestroy( TokenizerT * tk ) {
  * state. Each function is called upon based on the previous state the FSM
  * was in. */
 
-/*set the global char to the malform char of token*/
-int malChar(char ptr) {
-    err = ptr;
-    return 0;
-}
-
 /* this will check whether or not the first character of token is a valid char of
  * (1-9), (this will be int or float), '0' (which will be float, hex, oct or zero state) or a letter (word)
  * or one of the many C operators or a malformed character. */
@@ -89,12 +82,6 @@ int isZeroLetterOrNot(char x) {
     if ((x >= 'a' && x <= 'z')||(x >= 'A' && x <= 'Z')) {
         curr_State = isAlphaNumeric;
     }
-    else {
-        curr_State = malformed;
-        temp_State = malformed;
-        malChar(x);
-    }
-
     return 0;
 }
 
@@ -156,12 +143,8 @@ char *TKGetNextToken( TokenizerT * tk ) {
             *token = *pc;
             pc++;
             token++;
-        }
+        }bb
         switch(curr_State) {
-            case (malformed): {     /*temporary*/
-                *token = '\0';
-                return tempToken;
-            }
             case (undetermined): {
                 isZeroLetterOrNot(*pc);
                 break;
@@ -180,23 +163,6 @@ char *TKGetNextToken( TokenizerT * tk ) {
     }
     *token = '\0';
     return tempToken;
-}
-
-/* Returns the type of token for print to terminal*/
-char* TKGetState(char* token) {
-    switch (temp_State) {
-        case(malformed): {
-            return "ERROR";
-            break;
-        }
-        case (isAlphaNumeric): {
-            return "WORD";
-            break;
-        }
-        default:
-            break;
-    }
-    return 0;
 }
 
 /*
@@ -226,26 +192,25 @@ int main(int argc, char **argv) {
             exit(1);
         }
 
-       //char * str;
+        char *fileContents;
+        long fileSize;
 
-        char str[30];
-        char str2[30];
+        fseek(file, 0, SEEK_END);
+        fileSize = ftell(file);
+        rewind(file);
+        fileContents = (char *)malloc((fileSize+1)*(sizeof(char)));
+        fread(fileContents, sizeof(char), fileSize, file);
+        fclose(file);
+        fileContents[fileSize] = 0;
 
-        fscanf(file, "%s %s", str, str2);
-
-        TokenizerT *tokenizer = TKCreate (str);        //creation of tokenizerT
+        TokenizerT *tokenizer = TKCreate (fileContents);        //creation of tokenizerT
         curr_State = undetermined;
         char* token;
 
         while (*tokenizer->myString != '\0') {
             token = TKGetNextToken(tokenizer);
-            char* status = TKGetState(token);
-            fprintf(stdout,"%s: %s ",status,token);
-            if (temp_State == malformed) {
-                fprintf(stdout,"Error caused by: [0x%x]",err);
-            }
+            printf("%s", token);
             printf("\n");
-
         }
         TKDestroy(tokenizer);
     }
