@@ -197,7 +197,7 @@ int main(int argc, char **argv) {
         fseek(file, 0, SEEK_END);
         fileSize = ftell(file);
         rewind(file);
-        fileContents = (char *)malloc((fileSize)*(sizeof(char)));
+        fileContents = (char *)malloc(fileSize*sizeof(char));
         fread(fileContents, sizeof(char), fileSize, file);
         fclose(file);
 
