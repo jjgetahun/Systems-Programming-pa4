@@ -201,8 +201,6 @@ int main(int argc, char **argv) {
         fread(fileContents, sizeof(char), fileSize, file);
         fclose(file);
 
-        printf("FILE SIZE: %ld\n", fileSize);
-
         TokenizerT *tokenizer = TKCreate (fileContents);        //creation of tokenizerT
         curr_State = undetermined;
         char* token;
