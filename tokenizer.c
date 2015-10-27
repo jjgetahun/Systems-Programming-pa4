@@ -117,10 +117,9 @@ char *TKGetNextToken( TokenizerT * tk ) {
     }
 
     char* token = (char*) malloc (((tk -> stringSize)+2)*sizeof(char));
-    char* tempToken = (char*) malloc(sizeof(char*));
-    tempToken = token;
+    char* tempToken = token;
 
-    while (isspace(*pc)) {
+    while (!isalpha(*pc)) {
         pc++;
     }
 
@@ -143,7 +142,7 @@ char *TKGetNextToken( TokenizerT * tk ) {
             *token = *pc;
             pc++;
             token++;
-        }bb
+        }
         switch(curr_State) {
             case (undetermined): {
                 isZeroLetterOrNot(*pc);
