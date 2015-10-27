@@ -119,7 +119,7 @@ char *TKGetNextToken( TokenizerT * tk ) {
     char* token = (char*) malloc (((tk -> stringSize)+2)*sizeof(char));
     char* tempToken = token;
 
-    while (!isalpha(*pc)) {
+    while (*pc != '\0' && !isalpha(*pc)) {
         pc++;
     }
 
@@ -197,19 +197,19 @@ int main(int argc, char **argv) {
         fseek(file, 0, SEEK_END);
         fileSize = ftell(file);
         rewind(file);
-        fileContents = (char *)malloc((fileSize+1)*(sizeof(char)));
+        fileContents = (char *)malloc((fileSize)*(sizeof(char)));
         fread(fileContents, sizeof(char), fileSize, file);
         fclose(file);
-        fileContents[fileSize] = 0;
+
+        printf("FILE SIZE: %ld\n", fileSize);
 
         TokenizerT *tokenizer = TKCreate (fileContents);        //creation of tokenizerT
         curr_State = undetermined;
         char* token;
 
-        while (*tokenizer->myString != '\0') {
+        while (*pc != '\0') {
             token = TKGetNextToken(tokenizer);
-            printf("%s", token);
-            printf("\n");
+            printf("%s\n", token);
         }
         TKDestroy(tokenizer);
     }
