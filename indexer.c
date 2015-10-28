@@ -12,13 +12,13 @@ int main (int argc, char ** argv) {
     typedef struct dirent * dirent;
     dirent entry;
     extern int errno;
-    dir = opendir(argv[1]);
-
+    
     if (argc < 2) {
         fprintf(stderr, "Must specify directory name on command line.\n");
         return 1;
     }
-    else if (dir == 0) {
+    dir = opendir(argv[1]);
+    if (dir == NULL) {
         fprintf(stderr, "Could not open %s as directory: %s.\n", argv[1], strerror(errno));
         return 1;
     }
