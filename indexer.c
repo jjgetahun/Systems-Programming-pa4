@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <dirent.h>
+#include <errno.h>
 #include "tokenizer.h"
 
 int main (int argc, char ** argv) {

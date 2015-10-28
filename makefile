@@ -1,3 +1,6 @@
+indexer: indexer.c
+	gcc -g -o indexer indexer.c
+
 token: tokenizer.c tokenizer.h
 	gcc -g -o tokenizer tokenizer.c
 
@@ -12,4 +15,4 @@ get:
 	git push
 
 clean:
-	rm -rf *.o *.dSYM tokenizer
+	rm -rf *.o *.dSYM indexer tokenizer
