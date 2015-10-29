@@ -9,10 +9,11 @@
 int main (int argc, char ** argv) {
 
     DIR * dir;
-    typedef struct dirent * dirent;
-    dirent entry;
+    //typedef struct dirent * dire;
+    //dire entry;
+    struct dirent * entry;
     extern int errno;
-    
+
     if (argc < 2) {
         fprintf(stderr, "Must specify directory name on command line.\n");
         return 1;
