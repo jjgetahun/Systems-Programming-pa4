@@ -21,11 +21,10 @@ void findDirs(DIR * dir, dirent entry) {
 }
 
 int main (int argc, char ** argv) {
-    
+    FILE * file;
     DIR * dir;
     dirent entry;
     extern int errno;
-    FILE * file;
 
     if (argc != 2) {
         fprintf(stderr, "You must specify a single file or directory name on the command line.\n");
@@ -33,16 +32,16 @@ int main (int argc, char ** argv) {
     }
     if ((file = fopen(argv[1], "r")) == NULL && (dir = opendir(argv[1])) == 0) {
     	fprintf(stderr, "Could not open %s as file or directory: %s.\n", argv[1], strerror(errno));
-	return 1;
+        return 1;
     }
     else {
     	if ((file = fopen(argv[1], "r")) != NULL) {
-	tokenize(file);
-	}
-	if ((dir = opendir(argv[1])) != 0) {
-	findDirs(dir, entry);
-	closedir(dir);
-	}
+            tokenize(file);
+        }
+        if ((dir = opendir(argv[1])) != 0) {
+            findDirs(dir, entry);
+            closedir(dir);
+        }
     }
     return 0;
 }

@@ -165,30 +165,30 @@ char *TKGetNextToken( TokenizerT * tk ) {
 }
 
 /*
- * main will have a string argument (in argv[1]).
+ * tokenize will have a string argument (in argv[1]).
  * The string argument contains the tokens.
  * Print out the tokens in the second string in left-to-right order.
  * Each token should be printed on a separate line.
  */
 
 void tokenize(FILE * file) { 
-	char *fileContents;
-        long fileSize;
+    char *fileContents;
+    long fileSize;
 
-        fseek(file, 0, SEEK_END);
-        fileSize = ftell(file);
-        rewind(file);
-        fileContents = (char *)malloc(fileSize*sizeof(char));
-        fread(fileContents, sizeof(char), fileSize, file);
-        fclose(file);
+    fseek(file, 0, SEEK_END);
+    fileSize = ftell(file);
+    rewind(file);
+    fileContents = (char *)malloc(fileSize*sizeof(char));
+    fread(fileContents, sizeof(char), fileSize, file);
+    fclose(file);
 
-        TokenizerT *tokenizer = TKCreate (fileContents);        //creation of tokenizerT
-        curr_State = undetermined;
-        char* token;
+    TokenizerT *tokenizer = TKCreate (fileContents);        //creation of tokenizerT
+    curr_State = undetermined;
+    char* token;
 
-        while (*pc != '\0') {
-            token = TKGetNextToken(tokenizer);
-            printf("%s\n", token);
-        }
-        TKDestroy(tokenizer);
+    while (*pc != '\0') {
+        token = TKGetNextToken(tokenizer);
+        printf("%s\n", token);
+    }
+    TKDestroy(tokenizer);
 }
