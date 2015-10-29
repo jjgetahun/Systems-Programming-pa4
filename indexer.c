@@ -25,8 +25,11 @@ int main (int argc, char ** argv) {
     else {
         printf("Begin directory info list.\n");
         entry = readdir(dir);
-        while (entry != 0) {
-            printf("d_ino %d, d_off %d, d_reclen %d, d_name %s.\n", entry->d_ino, entry->d_off, entry->d_reclen, entry->d_name);
+        while (entry != NULL) {
+           // if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
+	   // continue;
+	   // }
+	    printf("d_ino %d, d_off %d, d_reclen %d, d_name %s.\n", entry->d_ino, entry->d_off, entry->d_reclen, entry->d_name);
             printf("%s.\n", entry->d_name);
         }
         closedir(dir);
