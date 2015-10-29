@@ -171,27 +171,8 @@ char *TKGetNextToken( TokenizerT * tk ) {
  * Each token should be printed on a separate line.
  */
 
-int main(int argc, char **argv) {
-    if (argc == 1 || argv[1][0] == '\0') {									//in case no arguments are given
-        fprintf(stderr, "No arguments given!\n");
-        exit(1);
-    }
-
-    else if (argc > 2) {
-        fprintf(stderr, "Too many arguments given!\n");
-        exit(1);
-    }
-
-    else {
-
-        FILE * file = fopen(argv[1], "r");
-
-        if (file == NULL) {
-            fprintf(stderr, "The given argument is not a file!\n");
-            exit(1);
-        }
-
-        char *fileContents;
+void tokenize(FILE * file) { 
+	char *fileContents;
         long fileSize;
 
         fseek(file, 0, SEEK_END);
@@ -210,6 +191,4 @@ int main(int argc, char **argv) {
             printf("%s\n", token);
         }
         TKDestroy(tokenizer);
-    }
-    return 0;
 }
