@@ -112,8 +112,8 @@ int isAlphaNumericOrNot(char x) {
 
 char *TKGetNextToken( TokenizerT * tk ) {
     if (*pc == '\0') {
-        TKDestroy(tk);
-        exit (0);
+        //TKDestroy(tk);
+        return NULL;
     }
 
     char* token = (char*) malloc (((tk -> stringSize)+2)*sizeof(char));
@@ -124,13 +124,14 @@ char *TKGetNextToken( TokenizerT * tk ) {
     }
 
     if (*pc == '\0' && onlySpaces == 0) {
-        printf("Only whitespace entered\n");
-        TKDestroy (tk);
-        exit (0);
+        //TKDestroy (tk);
+        free(token);
+        return NULL;
     }
     else if (*pc == '\0') {
-        TKDestroy (tk);
-        exit(0);
+        //TKDestroy (tk);
+        free(token);
+        return NULL;
     }
 
     onlySpaces++;			//only if a nonspace is found;
@@ -180,7 +181,7 @@ void tokenize(FILE * file) {
     rewind(file);
     fileContents = (char *)malloc(fileSize*sizeof(char));
     fread(fileContents, sizeof(char), fileSize, file);
-    fclose(file);
+    //fclose(file);
 
     TokenizerT *tokenizer = TKCreate (fileContents);        //creation of tokenizerT
     curr_State = undetermined;
@@ -188,7 +189,14 @@ void tokenize(FILE * file) {
 
     while (*pc != '\0') {
         token = TKGetNextToken(tokenizer);
+        if (token == '\0') {
+            free(token);
+            break;
+        }
         printf("%s\n", token);
+        free(token);
     }
     TKDestroy(tokenizer);
+    free(token);
+    free(fileContents);
 }
