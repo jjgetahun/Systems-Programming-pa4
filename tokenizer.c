@@ -185,13 +185,8 @@ void tokenize(FILE * file) {
     fileSize = ftell(file);
     rewind(file);
     fileContents = (char *)malloc((fileSize+ 1)*sizeof(char));
-    fread(fileContents, fileSize, sizeof(char),file);
-    int len = strlen(fileContents);
-    printf("%d\n",len);
-    fileContents[len] = '\0';
-    //fileContents[strlen(fileContents)] = '\0';
-    //fclose(file);
-
+    fread(fileContents, sizeof(char), fileSize, file);
+    fileContents[fileSize] = '\0';
     TokenizerT *tokenizer = TKCreate (fileContents);        //creation of tokenizerT
     curr_State = undetermined;
     char* token;
