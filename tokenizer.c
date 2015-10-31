@@ -44,14 +44,18 @@ typedef struct TokenizerT_ TokenizerT;
  */
 
 TokenizerT *TKCreate( char * ts ) {
-    char copy[strlen(ts)]; 					//copy of string ts
-    strcpy(copy,ts);
+    //char copy[strlen(ts)]; 					//copy of string ts
+    //strcpy(copy,ts);
 
     TokenizerT *ptr = (TokenizerT*) malloc (sizeof(struct TokenizerT_));   //Allocation of size for TokenizerT_
     ptr -> i = 0;
-    ptr -> stringSize = strlen(copy);
+    /*ptr -> stringSize = strlen(copy);
     ptr -> myString = strdup(copy);
-
+    ptr -> myString = ts;*/
+    ptr -> stringSize = strlen(ts);
+    //ptr -> myString = strdup(ts);
+    ptr -> myString = ts;
+    //free(ts);
     pc = (ptr -> myString);
 
     return ptr;           /*returning the pointer*/
@@ -65,6 +69,7 @@ TokenizerT *TKCreate( char * ts ) {
  */
 
 void TKDestroy( TokenizerT * tk ) {
+    free(tk -> myString);
     free(tk);
 }
 
@@ -179,8 +184,12 @@ void tokenize(FILE * file) {
     fseek(file, 0, SEEK_END);
     fileSize = ftell(file);
     rewind(file);
-    fileContents = (char *)malloc(fileSize*sizeof(char));
-    fread(fileContents, sizeof(char), fileSize, file);
+    fileContents = (char *)malloc((fileSize+ 1)*sizeof(char));
+    fread(fileContents, fileSize, sizeof(char),file);
+    int len = strlen(fileContents);
+    printf("%d\n",len);
+    fileContents[len] = '\0';
+    //fileContents[strlen(fileContents)] = '\0';
     //fclose(file);
 
     TokenizerT *tokenizer = TKCreate (fileContents);        //creation of tokenizerT
@@ -189,14 +198,13 @@ void tokenize(FILE * file) {
 
     while (*pc != '\0') {
         token = TKGetNextToken(tokenizer);
-        if (token == '\0') {
-            free(token);
+        if (token == '\0'||token == NULL) {
+            //free(token);
             break;
         }
         printf("%s\n", token);
         free(token);
     }
+    //free(fileContents);
     TKDestroy(tokenizer);
-    free(token);
-    free(fileContents);
 }
