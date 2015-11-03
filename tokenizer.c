@@ -164,6 +164,13 @@ char *TKGetNextToken( TokenizerT * tk ) {
     return tempToken;
 }
 
+void lowerCase(char * s) {
+   for (; *s != '\0'; s++) {
+    *s = tolower(*s);
+   }
+   return;
+}
+
 /*
  * tokenize will have a string argument (in argv[1]).
  * The string argument contains the tokens.
@@ -195,6 +202,7 @@ void tokenize(char * str) {
         if (token == '\0'||token == NULL) {
             break;
         }
+        lowerCase(token);
         printf("%s\n", token);
         free(token);
         token = NULL;

@@ -25,13 +25,8 @@ void findDirs(DIR * dir, dirent entry, char * str) {
         stat(s, &sb);
 
         if (S_ISREG(sb.st_mode)) {
-            tokenize(s);
-            //tokFile(s);
-            //tokFile(str);
             printf("FILE: %s\n", name);
-            //free(s);
-            //s = NULL;
-            //free(str);
+            tokenize(s);
         }
         else if (S_ISDIR(sb.st_mode)) {
             DIR * newDir = opendir(s);
