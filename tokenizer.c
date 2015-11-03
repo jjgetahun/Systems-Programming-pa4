@@ -70,7 +70,9 @@ TokenizerT *TKCreate( char * ts ) {
 
 void TKDestroy( TokenizerT * tk ) {
     free(tk -> myString);
+    tk -> myString = NULL;
     free(tk);
+    tk = NULL;
 }
 
 
@@ -131,11 +133,13 @@ char *TKGetNextToken( TokenizerT * tk ) {
     if (*pc == '\0' && onlySpaces == 0) {
         //TKDestroy (tk);
         free(token);
+        token = NULL;
         return NULL;
     }
     else if (*pc == '\0') {
         //TKDestroy (tk);
         free(token);
+        token = NULL;
         return NULL;
     }
 
@@ -177,16 +181,21 @@ char *TKGetNextToken( TokenizerT * tk ) {
  * Each token should be printed on a separate line.
  */
 
-void tokenize(FILE * file) { 
+//void tokenize(FILE * file) { 
+void tokenize(char * str) {
+    
+    FILE * file = fopen(str, "r");
+
     char *fileContents;
     long fileSize;
 
     fseek(file, 0, SEEK_END);
     fileSize = ftell(file);
     rewind(file);
-    fileContents = (char *)malloc((fileSize+ 1)*sizeof(char));
+    fileContents = (char *)malloc((fileSize+1)*sizeof(char));
     fread(fileContents, sizeof(char), fileSize, file);
     fileContents[fileSize] = '\0';
+    fclose(file);
     TokenizerT *tokenizer = TKCreate (fileContents);        //creation of tokenizerT
     curr_State = undetermined;
     char* token;
@@ -199,7 +208,9 @@ void tokenize(FILE * file) {
         }
         printf("%s\n", token);
         free(token);
+        token = NULL;
     }
     //free(fileContents);
+    //fileContents = NULL;
     TKDestroy(tokenizer);
 }
