@@ -44,18 +44,11 @@ typedef struct TokenizerT_ TokenizerT;
  */
 
 TokenizerT *TKCreate( char * ts ) {
-    //char copy[strlen(ts)]; 					//copy of string ts
-    //strcpy(copy,ts);
 
     TokenizerT *ptr = (TokenizerT*) malloc (sizeof(struct TokenizerT_));   //Allocation of size for TokenizerT_
     ptr -> i = 0;
-    /*ptr -> stringSize = strlen(copy);
-    ptr -> myString = strdup(copy);
-    ptr -> myString = ts;*/
     ptr -> stringSize = strlen(ts);
-    //ptr -> myString = strdup(ts);
     ptr -> myString = ts;
-    //free(ts);
     pc = (ptr -> myString);
 
     return ptr;           /*returning the pointer*/
@@ -119,7 +112,6 @@ int isAlphaNumericOrNot(char x) {
 
 char *TKGetNextToken( TokenizerT * tk ) {
     if (*pc == '\0') {
-        //TKDestroy(tk);
         return NULL;
     }
 
@@ -131,13 +123,11 @@ char *TKGetNextToken( TokenizerT * tk ) {
     }
 
     if (*pc == '\0' && onlySpaces == 0) {
-        //TKDestroy (tk);
         free(token);
         token = NULL;
         return NULL;
     }
     else if (*pc == '\0') {
-        //TKDestroy (tk);
         free(token);
         token = NULL;
         return NULL;
@@ -203,14 +193,11 @@ void tokenize(char * str) {
     while (*pc != '\0') {
         token = TKGetNextToken(tokenizer);
         if (token == '\0'||token == NULL) {
-            //free(token);
             break;
         }
         printf("%s\n", token);
         free(token);
         token = NULL;
     }
-    //free(fileContents);
-    //fileContents = NULL;
     TKDestroy(tokenizer);
 }
