@@ -165,10 +165,9 @@ char *TKGetNextToken( TokenizerT * tk ) {
 }
 
 void lowerCase(char * s) {
-   for (; *s != '\0'; s++) {
-    *s = tolower(*s);
-   }
-   return;
+    for (; *s != '\0'; s++) {
+        *s = tolower(*s);
+    }
 }
 
 /*
