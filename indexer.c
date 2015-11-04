@@ -57,11 +57,13 @@ int main (int argc, char ** argv) {
         }
         else {
             if (S_ISREG(sb.st_mode)) { /*If the argument is a file*/
+                printf("FILE: %s\n", argv[1]);
                 tokenize(argv[1]);
                 return 0;
             }
             if (S_ISDIR(sb.st_mode)) { /*If the argument is a directory*/
                 dir = opendir(argv[1]);
+                printf("DIR: %s\n", argv[1]);
                 findDirs(dir, entry, argv[1]);
                 closedir(dir);
             }
