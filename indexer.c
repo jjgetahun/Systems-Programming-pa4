@@ -33,6 +33,7 @@ void findDirs(DIR * dir, dirent entry, char * str) {
             dirent newEntry;
             printf("DIR: %s\n", name);
             findDirs(newDir, newEntry, s);
+            closedir(newDir);
         }
         free(s); 
         s = NULL;
