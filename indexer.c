@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include "tokenizer.h"
+#include "sorted-list.h"
 
 typedef struct dirent * dirent;
 typedef struct stat stat_;
@@ -35,7 +36,7 @@ void findDirs(DIR * dir, dirent entry, char * str) {
             findDirs(newDir, newEntry, s);
             closedir(newDir);
         }
-        free(s); 
+        free(s);
         s = NULL;
     }
 }
