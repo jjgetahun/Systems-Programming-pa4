@@ -13,7 +13,7 @@ SortedListPtr SLCreate(CompareFuncT cf, DestructFuncT df) {
     SortedListPtr SL = (SortedListPtr)malloc(sizeof(SortedList));
     SL->CompareFuncT = (CompareFuncT)malloc(sizeof(CompareFuncT));
     SL->CompareFuncT = cf;
-    SL->DestructFuncT = (DestructFuncT)malloc(sizeof(DestructFuncT)); 
+    SL->DestructFuncT = (DestructFuncT)malloc(sizeof(DestructFuncT));
     SL->DestructFuncT = df;
     SL->head = (SortedListPtr)malloc(sizeof(SortedListPtr));
     SL->head = NULL;
@@ -24,8 +24,8 @@ SortedListPtr SLCreate(CompareFuncT cf, DestructFuncT df) {
 }
 
 /*
- * Will insert nodes into sorted list, or create a head for new sorted 
- * list. Return 1 if successful, 0 if any other case. The sorted list is 
+ * Will insert nodes into sorted list, or create a head for new sorted
+ * list. Return 1 if successful, 0 if any other case. The sorted list is
  * in descending order.
  */
 int SLInsert(SortedListPtr list, void *newObj) {
@@ -34,7 +34,7 @@ int SLInsert(SortedListPtr list, void *newObj) {
 
     temp->data = newObj;
     temp->numPtr+=1;
-   
+
     if (list->head == NULL) {
         list->head = temp;
         return 1;
@@ -83,8 +83,8 @@ int SLInsert(SortedListPtr list, void *newObj) {
 }
 
 /*
- * Will remove nodes from the sorted list if their data matches the data 
- * that is specified. Returns 1 if successful, 0 if any other case. 
+ * Will remove nodes from the sorted list if their data matches the data
+ * that is specified. Returns 1 if successful, 0 if any other case.
  */
 int SLRemove(SortedListPtr list, void *newObj) {
     if (list->head == NULL) { /*If the list has nothing in it*/
@@ -99,14 +99,14 @@ int SLRemove(SortedListPtr list, void *newObj) {
                 if (list->head->numPtr == 1) {      //if head is is only referenced by head
                     list->DestructFuncT(list->head);
                 }
-                list->head = NULL; /*Makes the head null*/  
+                list->head = NULL; /*Makes the head null*/
                 return 1;
             }
             else { /*If there is something after the head*/
                 SortedListPtr temp = list->head;
                 list->head = list->head->next; /*Makes the item after the head the new head*/
                 temp->numPtr-=1;
-                if (temp->numPtr == 0) {            
+                if (temp->numPtr == 0) {
                     list->DestructFuncT(temp);
                 }
                 else {
@@ -136,7 +136,7 @@ int SLRemove(SortedListPtr list, void *newObj) {
                             list->DestructFuncT(temp);
                         }
                         else if (temp->next != NULL) {
-                                temp->next->numPtr+=1;      //if its not null, incrememnt ptr. 
+                                temp->next->numPtr+=1;      //if its not null, incrememnt ptr.
                         }
                         return 1;
                     }
@@ -156,9 +156,9 @@ int SLRemove(SortedListPtr list, void *newObj) {
 }
 
 /*
- * Creates a sorted list iterator, allocating space for it if the sorted 
- * list exists and has a head, and making it point to the head of the list, 
- * incrementing numPtr by 1. It also allocates space for DestructFuncT, which 
+ * Creates a sorted list iterator, allocating space for it if the sorted
+ * list exists and has a head, and making it point to the head of the list,
+ * incrementing numPtr by 1. It also allocates space for DestructFuncT, which
  * points to the sorted list's DestructFuncT.
  */
 SortedListIteratorPtr SLCreateIterator (SortedListPtr list) {
@@ -176,7 +176,7 @@ SortedListIteratorPtr SLCreateIterator (SortedListPtr list) {
 }
 
 /*
- * Goes to the node in the list that a given iterator pointing to. If it 
+ * Goes to the node in the list that a given iterator pointing to. If it
  * doesn't exist, return 0, else return that node's data.
  */
 void* SLGetItem(SortedListIteratorPtr iter) {
@@ -186,7 +186,7 @@ void* SLGetItem(SortedListIteratorPtr iter) {
     if (temp == NULL){
         return 0;
     }
-    else { 
+    else {
         return temp->data;
     }
 }
@@ -195,7 +195,7 @@ void* SLGetItem(SortedListIteratorPtr iter) {
  * Goes to the node in the list that follows the node that a given iterator
  * is pointing to. If it exists, the iterator will point to that node, and
  * numPtr for that node will increase by one. numPtr for the node that the
- * iterator was previously pointing to will decrease by 1, and if the 
+ * iterator was previously pointing to will decrease by 1, and if the
  * resulting numPtr is 0, then that node will be destroyed. numPtr for the
  * current node will decrease by 1, and its data will be returned. If the
  * node does not exist, the iterator will point to nothing, and numPtr for
@@ -204,7 +204,7 @@ void* SLGetItem(SortedListIteratorPtr iter) {
  */
 void * SLNextItem(SortedListIteratorPtr iter) {
     SortedListPtr temp = iter->CurrNode;
-    if (temp->next == NULL) {          
+    if (temp->next == NULL) {
         iter->CurrNode = NULL;
         temp->numPtr-=1;
         if (temp->numPtr == 0)

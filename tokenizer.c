@@ -177,9 +177,8 @@ void lowerCase(char * s) {
  * Each token should be printed on a separate line.
  */
 
-//void tokenize(FILE * file) { 
 void tokenize(char * str) {
-    
+
     FILE * file = fopen(str, "r");
 
     char *fileContents;

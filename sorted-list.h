@@ -16,7 +16,7 @@ struct SortedList {
     struct SortedList* next;
     void* data;
     int numPtr;
-};  
+};
 typedef struct SortedList* SortedListPtr;
 typedef struct SortedList SortedList;
 
@@ -53,7 +53,7 @@ typedef void (*DestructFuncT)( void * );
  * a comparator function that can be used to order objects that will be
  * kept in the list, and a destruct function that gets rid of the objects
  * once they are no longer in the list or referred to in an iterator.
- * 
+ *
  * If the function succeeds, it returns a (non-NULL) SortedListT object,
  * otherwise, it returns NULL.
  *
@@ -130,7 +130,7 @@ void SLDestroyIterator(SortedListIteratorPtr iter);
  * SLGetItem returns the pointer to the data associated with the
  * SortedListIteratorPtr.  It should return 0 if the iterator
  * advances past the end of the sorted list.
- * 
+ *
  * You need to fill in this function as part of your implementation.
 */
 
