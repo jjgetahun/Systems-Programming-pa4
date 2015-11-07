@@ -34,7 +34,7 @@ void findDirs(DIR * dir, dirent entry, char * str) {
             char * str = tokenize(s);
             char * token = strtok(str, " ");
             while (token != NULL) {
-                printf("%s\n", token);                    
+                printf("%s\n", token);
                 token = strtok(NULL, " ");
             }
             free(str);
@@ -56,7 +56,7 @@ int main (int argc, char ** argv) {
     dirent entry;
     extern int errno;
     stat_ sb;
-    
+
     if (argc != 2) { /*If there are not two arguments*/
         fprintf(stderr, "You must specify a single file or directory name on the command line.\n");
         return 1;
