@@ -153,6 +153,8 @@ char *TKGetNextToken( TokenizerT * tk ) {
                 break;
             }
             case (done): {
+                *token = ' ';
+                token++;
                 *token = '\0';
                 return tempToken;
             }
@@ -177,17 +179,20 @@ void lowerCase(char * s) {
  * Each token should be printed on a separate line.
  */
 
-void tokenize(char * str) {
+char* tokenize(char * str) {
 
     FILE * file = fopen(str, "r");
 
     char *fileContents;
+    char *finalString;
     long fileSize;
 
     fseek(file, 0, SEEK_END);
     fileSize = ftell(file);
     rewind(file);
     fileContents = (char *)malloc((fileSize+1)*sizeof(char));
+    finalString = (char *)malloc((fileSize+1)*sizeof(char));
+    finalString[0] = '\0';
     fread(fileContents, sizeof(char), fileSize, file);
     fileContents[fileSize] = '\0';
     fclose(file);
@@ -201,9 +206,20 @@ void tokenize(char * str) {
             break;
         }
         lowerCase(token);
-        printf("%s\n", token);
+        strcat(finalString,token);
         free(token);
         token = NULL;
     }
     TKDestroy(tokenizer);
+    char * temp = finalString;
+
+    while (*temp != '\0') {
+        if (*(temp+1) == '\0')
+            break;
+        temp++;
+    }
+
+    *temp = '\0';
+
+    return finalString;
 }

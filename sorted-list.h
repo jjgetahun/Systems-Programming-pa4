@@ -12,10 +12,15 @@
 struct SortedList {
     int (*CompareFuncT)(void*, void*);
     void (*DestructFuncT)(void*);
-    struct SortedList* head;
-    struct SortedList* next;
-    void* data;
-    int numPtr;
+    struct SortedList* headWord;
+    struct SortedList* nextWord;
+    struct SortedList* headFile;
+    struct SortedList* nextFile;
+    char* word;
+    char* file;
+    int count;
+    //void* data;
+    //int numPtr;
 };
 typedef struct SortedList* SortedListPtr;
 typedef struct SortedList SortedList;

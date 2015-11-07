@@ -9,17 +9,20 @@
  * DestructFuncT, the head of the list, and "next". It also initializes
  * head, next, and numPtr.
  */
-SortedListPtr SLCreate(CompareFuncT cf, DestructFuncT df) {
+SortedListPtr SLCreate(CompareFuncT cf) {
     SortedListPtr SL = (SortedListPtr)malloc(sizeof(SortedList));
     SL->CompareFuncT = (CompareFuncT)malloc(sizeof(CompareFuncT));
     SL->CompareFuncT = cf;
-    SL->DestructFuncT = (DestructFuncT)malloc(sizeof(DestructFuncT));
-    SL->DestructFuncT = df;
-    SL->head = (SortedListPtr)malloc(sizeof(SortedListPtr));
-    SL->head = NULL;
-    SL->next = (SortedListPtr)malloc(sizeof(SortedListPtr));
-    SL->next = NULL;
-    SL -> numPtr = 0;
+    //SL->DestructFuncT = (DestructFuncT)malloc(sizeof(DestructFuncT));
+    //SL->DestructFuncT = df;
+    //SL->head = (SortedListPtr)malloc(sizeof(SortedListPtr));
+    SL->headWord = NULL;
+    SL->headFile = NULL;
+    //SL->next = (SortedListPtr)malloc(sizeof(SortedListPtr));
+    SL->nextWord = NULL;
+    SL->nextFile = NULL;
+    //SL -> numPtr = 0;
+    
     return SL;
 }
 
@@ -227,6 +230,18 @@ void * SLNextItem(SortedListIteratorPtr iter) {
  * Destroys a sorted list when called.
  */
 void SLDestroy(SortedListPtr list) {
+    if (list != NULL)
+        return;
+    SortedListPtr temp, temp1;
+    temp = list -> head;
+    while (temp != NULL) {
+        temp1 = temp -> next;
+        free(temp -> data);
+        free (temp);
+        temp = temp1;
+    }
+    free(list -> CompareFuncT);
+    free(list -> DestructFuncT);
     free(list);
 }
 
@@ -234,5 +249,6 @@ void SLDestroy(SortedListPtr list) {
  * Destroys an iterator when called.
  */
 void SLDestroyIterator(SortedListIteratorPtr iter) {
+    free(iter -> DestructFuncT);
     free(iter);
 }

@@ -2,6 +2,6 @@
 #define tokenizer_h
 
 //void tokenize (FILE * file);
-void tokenize (char * str);
+char * tokenize (char * str);
 
 #endif

@@ -11,6 +11,10 @@
 typedef struct dirent * dirent;
 typedef struct stat stat_;
 
+int compareString(char* s1, char* s2) {
+    return strcmp(s1, s2);
+}
+
 void findDirs(DIR * dir, dirent entry, char * str) {
 
     stat_ sb;
@@ -27,7 +31,13 @@ void findDirs(DIR * dir, dirent entry, char * str) {
 
         if (S_ISREG(sb.st_mode)) {
             printf("FILE: %s\n", name);
-            tokenize(s);
+            char * str = tokenize(s);
+            char * token = strtok(str, " ");
+            while (token != NULL) {
+                printf("%s\n", token);                    
+                token = strtok(NULL, " ");
+            }
+            free(str);
         }
         else if (S_ISDIR(sb.st_mode)) {
             DIR * newDir = opendir(s);
@@ -46,7 +56,7 @@ int main (int argc, char ** argv) {
     dirent entry;
     extern int errno;
     stat_ sb;
-
+    
     if (argc != 2) { /*If there are not two arguments*/
         fprintf(stderr, "You must specify a single file or directory name on the command line.\n");
         return 1;
@@ -60,7 +70,13 @@ int main (int argc, char ** argv) {
         else {
             if (S_ISREG(sb.st_mode)) { /*If the argument is a file*/
                 printf("FILE: %s\n", argv[1]);
-                tokenize(argv[1]);
+                char * str = tokenize(argv[1]);
+                char * token = strtok(str, " ");
+                while (token != NULL) {
+                    printf("%s\n", token);
+                    token = strtok(NULL, " ");
+                }
+                free(str);
                 return 0;
             }
             if (S_ISDIR(sb.st_mode)) { /*If the argument is a directory*/
