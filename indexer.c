@@ -30,7 +30,7 @@ void findDirs(DIR * dir, dirent entry, char * str, SortedListPtr root) {
         stat(s, &sb);
 
         if (S_ISREG(sb.st_mode)) {
-            printf("FILE: %s\n", name);
+            //printf("FILE: %s\n", name);
             char * str = tokenize(s);
             if (str == NULL) {
                 continue;
@@ -49,7 +49,7 @@ void findDirs(DIR * dir, dirent entry, char * str, SortedListPtr root) {
         else if (S_ISDIR(sb.st_mode)) {
             DIR * newDir = opendir(s);
             dirent newEntry;
-            printf("DIR: %s\n", name);
+            //printf("DIR: %s\n", name);
             findDirs(newDir, newEntry, s, root);
             closedir(newDir);
         }
@@ -78,7 +78,8 @@ int main (int argc, char ** argv) {
         }
         else {
             if (S_ISREG(sb.st_mode)) { /*If the argument is a file*/
-                printf("FILE: %s\n", argv[1]);
+                printf("{\"list\" : [\n");
+                //printf("FILE: %s\n", argv[1]);
                 char * str = tokenize(argv[1]);
                 char * token = strtok(str, " ");
                 while (token != NULL) {
@@ -89,11 +90,13 @@ int main (int argc, char ** argv) {
                 free(str);
                 printList(root);
                 cleanList(root);
+                printf("]}\n");
                 return 0;
             }
             if (S_ISDIR(sb.st_mode)) { /*If the argument is a directory*/
+                printf("{\"list\" : [\n");
                 dir = opendir(argv[1]);
-                printf("DIR: %s\n", argv[1]);
+                //printf("DIR: %s\n", argv[1]);
                 findDirs(dir, entry, argv[1], root);
                 closedir(dir);
             }
@@ -101,5 +104,6 @@ int main (int argc, char ** argv) {
     }
     printList(root);
     cleanList(root);
+    printf("]}\n");
     return 0;
 }
