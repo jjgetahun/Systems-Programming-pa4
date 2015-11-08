@@ -20,7 +20,8 @@ int compareString(char* s1, char* s2) {
 
 void findDirs(DIR * dir, dirent entry, char * str) {
 
-        stat_ sb;
+    //node *n = NULL;
+    stat_ sb;
 
         while ((entry = readdir(dir)) != 0) {
             char * name = entry->d_name;
@@ -41,11 +42,15 @@ void findDirs(DIR * dir, dirent entry, char * str) {
                 char * str = tokenize(s);
                 char * token = strtok(str, " ");
 
+                node * n = NULL;
+                
                 while (token != NULL) {
+                    n = insert(token, s, n);
+                    //printf("%s\n", n->name);
                     //printf("%s\n", token);
-                    //node * n = insert(
                     token = strtok(NULL, " ");
                 }
+                print(n);
                 free(str);
             }
 
@@ -59,6 +64,7 @@ void findDirs(DIR * dir, dirent entry, char * str) {
             free(s);
             s = NULL;
         }
+        //print(n);
 }
 
 int main (int argc, char ** argv) {
@@ -101,7 +107,7 @@ int main (int argc, char ** argv) {
                         token = strtok(NULL, " ");
                     }
                     //print(root);
-                    //print(n);
+                    print(n);
                     free(str);
                     return 0;
                 }

@@ -25,20 +25,21 @@ node * singleLeftRotation(node * n) {
     m->rightChild = n;
 
     n->height = max(height(n->leftChild), height(n->rightChild))+1;
-    m->height = max(height(m->leftChild), height(m->rightChild))+1;
+    m->height = max(height(m->leftChild), n->height)+1;
 
     return m;
 }
 
 node * singleRightRotation(node * n) {
-    node * m = NULL;
+    //node * m = NULL;
+    node * m;
 
     m = n->rightChild;
     n->rightChild = m->leftChild;
     m->leftChild = n;
 
     n->height = max(height(n->leftChild), height(n->rightChild))+1;
-    m->height = max(height(m->leftChild), height(m->rightChild))+1;
+    m->height = max(height(m->rightChild), n->height)+1;
 
     return m;
 }
@@ -118,7 +119,7 @@ node * insert(char * word, char * filename, node * root) {
         //return root->rightChild;
     }
     else { /*If the word is equal to the node's word*/
-        root->height = max(height(root->leftChild), height(root->rightChild))+1;
+        //root->height = max(height(root->leftChild), height(root->rightChild))+1;
         if (strcmp(root->head->name, filename) > 0) { /*If the file name is less than the node's head's file name*/
             root->head->leftChild = insertMoreNodes(filename, root->head->leftChild);
             if (height(root->head->leftChild) - height(root->head->rightChild) == 2) {
@@ -129,7 +130,7 @@ node * insert(char * word, char * filename, node * root) {
             }
         }
         else if (strcmp(root->head->name, filename) < 0) { /*If the file name is greater than the node's head's file name*/
-            root->head->rightChild = insertMoreNodes(filename, root->head->rightChild);
+            //root->head->rightChild = insertMoreNodes(filename, root->head->rightChild);
             if (height(root->head->rightChild) - height(root->head->leftChild) == 2) {
                 if (strcmp(root->head->rightChild->name, filename) < 0)
                     root->head = singleRightRotation(root->head);
@@ -141,8 +142,10 @@ node * insert(char * word, char * filename, node * root) {
             root->head->count++;
         }
         //printf("\t%s: %d\n", root->head->name, root->head->count);
-        return root;
+        //return root;
     }
+    root->height = max(height(root->leftChild), height(root->rightChild))+1;
+    return root;
 }
 
 node * insertMoreNodes(char * filename, node * root) {
@@ -176,21 +179,26 @@ node * insertMoreNodes(char * filename, node * root) {
     else { /*If the file name is equal to the node's file name*/
         root->count++;
         //printf("\t%s: %d\n", root->name, root->count);
-        return root;
+        //return root;
     }
+    root->height = max(height(root->leftChild), height(root->rightChild))+1;
+    return root;
 }
 
 void print(node * n) {
     if (n == NULL)
         return;
     
-    printf("%s\n", n->name);
+    printf("%s, ", n->name);
+    printf("Height: %d\n", n->height);
 
     if (n->leftChild != NULL)
         printf("L: %s\n", n->leftChild->name);
     if (n->rightChild != NULL)
         printf("R: %s\n", n->rightChild->name);
     
+    //printf("%s\n", n->name);
     print(n->leftChild);
+    //printf("%s\n", n->name);
     print(n->rightChild);
 }
