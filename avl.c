@@ -31,8 +31,7 @@ node * singleLeftRotation(node * n) {
 }
 
 node * singleRightRotation(node * n) {
-    //node * m = NULL;
-    node * m;
+    node * m = NULL;
 
     m = n->rightChild;
     n->rightChild = m->leftChild;
@@ -101,20 +100,24 @@ node * insert(char * word, char * filename, node * root) {
     else if (strcmp(root->name, word) > 0) { /*If the word is less than the node's word*/
         root->leftChild = insert(word, filename, root->leftChild);
         if (height(root->leftChild) - height(root->rightChild) == 2) {
-            if (strcmp(root->leftChild->name, word) > 0)
+            if (strcmp(root->leftChild->name, word) > 0 && root->leftChild != NULL)
                 root = singleLeftRotation(root);
-            else
-                root = doubleLeftRotation(root);
+            else {
+                if (root->leftChild != NULL && root->leftChild->rightChild != NULL)
+                    root = doubleLeftRotation(root);
+            }
         }
         //return root->leftChild;
     }
     else if (strcmp(root->name, word) < 0) { /*If the word is greater than the node's word*/
         root->rightChild = insert(word, filename, root->rightChild);
         if (height(root->rightChild) - height(root->leftChild) == 2) {
-            if (strcmp(root->rightChild->name, word) < 0)
+            if (strcmp(root->rightChild->name, word) < 0 && root->rightChild != NULL)
                 root = singleRightRotation(root);
-            else
-                root = doubleRightRotation(root);
+            else {
+                if (root->rightChild != NULL && root->rightChild->leftChild != NULL)
+                    root = doubleRightRotation(root);
+            }
         }
         //return root->rightChild;
     }
