@@ -10,8 +10,7 @@
  * Sorted list type.  You need to fill in the type as part of your implementation.
  */
 struct SortedList {
-    int (*CompareFuncT)(void*, void*);
-    void (*DestructFuncT)(void*);
+    int (*CompareFuncT)(char*, char*);
     struct SortedList* headWord;
     struct SortedList* nextWord;
     struct SortedList* headFile;
@@ -50,8 +49,9 @@ typedef struct SortedListIterator* SortedListIteratorPtr;
  * function when a new sorted list is created.
  */
 
-typedef int (*CompareFuncT)( void *, void * );
+typedef int (*CompareFuncT)( char *, char * );
 typedef void (*DestructFuncT)( void * );
+
 
 /*
  * SLCreate creates a new, empty sorted list.  The caller must provide
@@ -65,7 +65,7 @@ typedef void (*DestructFuncT)( void * );
  * You need to fill in this function as part of your implementation.
  */
 
-SortedListPtr SLCreate(CompareFuncT cf, DestructFuncT df);
+SortedListPtr SLCreate(CompareFuncT cf);
 
 /*
  * SLDestroy destroys a list, freeing all dynamically allocated memory.
@@ -85,8 +85,17 @@ void SLDestroy(SortedListPtr list);
  * You need to fill in this function as part of your implementation.
  */
 
-int SLInsert(SortedListPtr list, void *newObj);
+int SLInsert(SortedListPtr list, char* word);
 
+/*
+ * New functions from JCaverly
+ */
+
+void SLInsertWord(SortedListPtr list, char* word, char* file);
+
+void printList(SortedListPtr list);
+
+void cleanList(SortedListPtr list);
 
 /*
  * SLRemove removes a given object from a sorted list.  Sorted ordering

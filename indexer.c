@@ -15,7 +15,7 @@ int compareString(char* s1, char* s2) {
     return strcmp(s1, s2);
 }
 
-void findDirs(DIR * dir, dirent entry, char * str) {
+void findDirs(DIR * dir, dirent entry, char * str, SortedListPtr root) {
 
     stat_ sb;
 
@@ -34,7 +34,8 @@ void findDirs(DIR * dir, dirent entry, char * str) {
             char * str = tokenize(s);
             char * token = strtok(str, " ");
             while (token != NULL) {
-                printf("%s\n", token);
+                //printf("%s\n", token);
+                SLInsertWord(root,token,name);
                 token = strtok(NULL, " ");
             }
             free(str);
@@ -43,7 +44,7 @@ void findDirs(DIR * dir, dirent entry, char * str) {
             DIR * newDir = opendir(s);
             dirent newEntry;
             printf("DIR: %s\n", name);
-            findDirs(newDir, newEntry, s);
+            findDirs(newDir, newEntry, s, root);
             closedir(newDir);
         }
         free(s);
@@ -56,6 +57,8 @@ int main (int argc, char ** argv) {
     dirent entry;
     extern int errno;
     stat_ sb;
+
+    SortedListPtr root = SLCreate(compareString);
 
     if (argc != 2) { /*If there are not two arguments*/
         fprintf(stderr, "You must specify a single file or directory name on the command line.\n");
@@ -73,19 +76,24 @@ int main (int argc, char ** argv) {
                 char * str = tokenize(argv[1]);
                 char * token = strtok(str, " ");
                 while (token != NULL) {
-                    printf("%s\n", token);
+                    //printf("%s\n", token);
+                    SLInsertWord(root,token,argv[1]);
                     token = strtok(NULL, " ");
                 }
                 free(str);
+                printList(root);
+                cleanList(root);
                 return 0;
             }
             if (S_ISDIR(sb.st_mode)) { /*If the argument is a directory*/
                 dir = opendir(argv[1]);
                 printf("DIR: %s\n", argv[1]);
-                findDirs(dir, entry, argv[1]);
+                findDirs(dir, entry, argv[1], root);
                 closedir(dir);
             }
         }
     }
+    printList(root);
+    cleanList(root);
     return 0;
 }
