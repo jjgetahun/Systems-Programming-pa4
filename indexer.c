@@ -32,6 +32,9 @@ void findDirs(DIR * dir, dirent entry, char * str, SortedListPtr root) {
         if (S_ISREG(sb.st_mode)) {
             printf("FILE: %s\n", name);
             char * str = tokenize(s);
+            if (str == NULL) {
+                continue;
+            }
             char * token = strtok(str, " ");
             if (strcmp(token,"hello") == 0)
                 printf(" ");

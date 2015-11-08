@@ -221,5 +221,8 @@ char* tokenize(char * str) {
 
     *temp = '\0';
 
+    if (finalString[0] == '\0')
+        return NULL;
+
     return finalString;
 }
