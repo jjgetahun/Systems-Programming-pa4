@@ -12,7 +12,8 @@
 typedef struct dirent * dirent;
 typedef struct stat stat_;
 
-//node * n = NULL;
+node * n = NULL;
+//node * n;
 
 int compareString(char* s1, char* s2) {
     return strcmp(s1, s2);
@@ -42,7 +43,7 @@ void findDirs(DIR * dir, dirent entry, char * str) {
                 char * str = tokenize(s);
                 char * token = strtok(str, " ");
 
-                node * n = NULL;
+                //node * n = NULL;
                 
                 while (token != NULL) {
                     n = insert(token, s, n);
@@ -50,7 +51,7 @@ void findDirs(DIR * dir, dirent entry, char * str) {
                     //printf("%s\n", token);
                     token = strtok(NULL, " ");
                 }
-                print(n);
+                //print(n);
                 free(str);
             }
 
@@ -98,7 +99,7 @@ int main (int argc, char ** argv) {
                     //node * root = NULL; 
                     //root = insert(token, filename, root);
 
-                    node * n = NULL;
+                    //node * n = NULL;
 
                     while (token != NULL) {
                         n = insert(token, filename, n);
@@ -120,5 +121,8 @@ int main (int argc, char ** argv) {
                 }
             }
         }
+        //printf("%s\n", n->name);
+        //printf("%d\n", n->height);
+        print(n);
         return 0;
 }
