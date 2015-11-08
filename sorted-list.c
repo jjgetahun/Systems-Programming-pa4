@@ -196,7 +196,11 @@ void SLInsertWord(SortedListPtr list, char* word, char* fileName) {
 void printFiles (SortedListPtr list) {
    list = list -> headFile;
    for (;list != NULL;list = list -> nextFile) {
-        printf("\t\t{\"%s\" : %d},\n",list -> file, list -> count);
+       if (list -> nextFile == NULL) {
+           printf("\t\t{\"%s\" : %d}\n",list -> file, list -> count);
+           break;
+       }
+       printf("\t\t{\"%s\" : %d},\n",list -> file, list -> count);
    }
    return;
 }
@@ -206,6 +210,10 @@ void printList(SortedListPtr list) {
     for (;list != NULL; list = list -> nextWord) {
         printf("\t{\"%s\" : [\n",list -> word);
         printFiles(list);
+        if (list -> nextWord == NULL) {
+        printf("\t]}\n");
+        break;
+        }
         printf("\t]},\n");
     }
     return;
