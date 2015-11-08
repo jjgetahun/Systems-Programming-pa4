@@ -33,12 +33,15 @@ void findDirs(DIR * dir, dirent entry, char * str, SortedListPtr root) {
             printf("FILE: %s\n", name);
             char * str = tokenize(s);
             char * token = strtok(str, " ");
+            if (strcmp(token,"hello") == 0)
+                printf(" ");
             while (token != NULL) {
                 //printf("%s\n", token);
-                SLInsertWord(root,token,name);
+                SLInsertWord(root,token,s);
                 token = strtok(NULL, " ");
             }
             free(str);
+            token = NULL;
         }
         else if (S_ISDIR(sb.st_mode)) {
             DIR * newDir = opendir(s);

@@ -130,11 +130,12 @@ void SLInsertFile(SortedListPtr list, char* file) {
 void SLInsertWord(SortedListPtr list, char* word, char* fileName) {
     //SortedListPtr temp = (SortedListPtr) malloc(sizeof(SortedList));
     //SortedListPtr temp = (SortedListPtr) malloc(sizeof(SortedList));
-    SortedListPtr temp = SLCreateWord(word, list -> CompareFuncT);
+    //SortedListPtr temp = SLCreateWord(word, list -> CompareFuncT);
     //temp -> word = (char *) malloc(strlen(word) + 1);
     //strcpy(temp -> word,word);
     
     if (list -> headWord == NULL) {                             //No word inserted yet.
+        SortedListPtr temp = SLCreateWord(word, list -> CompareFuncT);
         list -> headWord = temp;            
         SLInsertFile(list -> headWord,fileName);
         return;     
@@ -142,9 +143,10 @@ void SLInsertWord(SortedListPtr list, char* word, char* fileName) {
     else {
         int comp = list->CompareFuncT(word, list->headWord->word);
         if (comp < 0) {                             /*If the new word is less than the head's data*/
+            SortedListPtr temp = SLCreateWord(word, list -> CompareFuncT);
             temp->nextWord = list->headWord;
             list->headWord = temp;
-            SLInsertFile(list -> headWord,fileName);
+            SLInsertFile(temp,fileName);
             return;
         }
         else if (comp == 0) {
@@ -152,8 +154,9 @@ void SLInsertWord(SortedListPtr list, char* word, char* fileName) {
             return;
         }
         else if (list->headWord->nextWord == NULL) {    /*If the head's word is less than the new object and there is nothing after the word*/
+            SortedListPtr temp = SLCreateWord(word, list -> CompareFuncT);
             list->headWord->nextWord = temp;
-            SLInsertFile(list -> headWord,fileName);
+            SLInsertFile(temp,fileName);
             return;
         }
         else {
@@ -163,9 +166,10 @@ void SLInsertWord(SortedListPtr list, char* word, char* fileName) {
                 comp = list->CompareFuncT(word, curr->nextWord->word);  /*Stores the result of the comparison between curr->next's data and the new object in an int*/
                 prev = curr;                    /*Makes the previous pointer the current pointer*/
                 if (comp < 0) {                 /*If word is smaller than curr->nextWord*/
+                    SortedListPtr temp = SLCreateWord(word, list -> CompareFuncT);
                     temp->nextWord = prev->nextWord;
                     prev->nextWord = temp;
-                    SLInsertFile(curr -> nextWord,fileName);
+                    SLInsertFile(temp,fileName);
                     return;
                 }
                 else if (comp == 0) { /*If curr->next's data is equal to the new object*/
@@ -174,6 +178,7 @@ void SLInsertWord(SortedListPtr list, char* word, char* fileName) {
                 }
                 else {                                  /*If curr->nextWord's word is smaller than the new word*/
                     if (curr->nextWord->nextWord == NULL) {     /*If curr->next->next is null*/
+                        SortedListPtr temp = SLCreateWord(word, list -> CompareFuncT);
                         curr->nextWord->nextWord = temp;        /*curr->next->next is temp*/
                         SLInsertFile(temp,fileName);
                         return;
