@@ -62,23 +62,33 @@ int main (int argc, char ** argv) {
     extern int errno;
     stat_ sb;
 
+    FILE * file = fopen(argv[1], "w");
+
     SortedListPtr root = SLCreate(compareString);
 
-    if (argc != 2) { /*If there are not two arguments*/
-        fprintf(stderr, "You must specify a single file or directory name on the command line.\n");
+    if (argc != 3) { /*If there are not three arguments*/
+        fprintf(stderr, "You must give a file to be written to, and specify a single file or directory name on the command line.\n");
+        fclose(file);
         return 1;
     }
-    else { /*If there are two arguments*/
+    else { /*If there are three arguments*/
         stat(argv[1], &sb);
+        if (!S_ISREG(sb.st_mode)) { /*If the second argument is not a file*/
+            fprintf(stderr, "\"%s\"is not a file.\n", argv[1]);
+            fclose(file);
+            return 1;
+        }
+        stat(argv[2], &sb);
         if (!S_ISREG(sb.st_mode) && !S_ISDIR(sb.st_mode)) { /*If the argument is not a file nor a directory*/
-            fprintf(stderr, "Could not open \"%s\" as a file or directory.\n", argv[1]);
+            fprintf(stderr, "Could not open \"%s\" as a file or directory.\n", argv[2]);
+            fclose(file);
             return 1;
         }
         else {
             if (S_ISREG(sb.st_mode)) { /*If the argument is a file*/
-                printf("{\"list\" : [\n");
+                fprintf(file, "{\"list\" : [\n");
                 //printf("FILE: %s\n", argv[1]);
-                char * str = tokenize(argv[1]);
+                char * str = tokenize(argv[2]);
                 char * token = strtok(str, " ");
                 while (token != NULL) {
                     //printf("%s\n", token);
@@ -86,22 +96,24 @@ int main (int argc, char ** argv) {
                     token = strtok(NULL, " ");
                 }
                 free(str);
-                printList(root);
+                printList(root, file);
                 cleanList(root);
-                printf("]}\n");
+                fprintf(file, "]}\n");
+                fclose(file);
                 return 0;
             }
             if (S_ISDIR(sb.st_mode)) { /*If the argument is a directory*/
-                printf("{\"list\" : [\n");
-                dir = opendir(argv[1]);
+                fprintf(file, "{\"list\" : [\n");
+                dir = opendir(argv[2]);
                 //printf("DIR: %s\n", argv[1]);
-                findDirs(dir, entry, argv[1], root);
+                findDirs(dir, entry, argv[2], root);
                 closedir(dir);
             }
         }
     }
-    printList(root);
+    printList(root, file);
     cleanList(root);
-    printf("]}\n");
+    fprintf(file, "]}\n");
+    fclose(file);
     return 0;
 }

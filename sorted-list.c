@@ -205,7 +205,7 @@ void SLInsertWord(SortedListPtr list, char* word, char* fileName) {
    return;
 }*/
 
-void printFiles(SortedListPtr list) {
+void printFiles(SortedListPtr list, FILE * file) {
     int max = 0;
     SortedListPtr p = list -> headFile;
     max = p->count;
@@ -217,30 +217,30 @@ void printFiles(SortedListPtr list) {
         return;
     p = list -> headFile;
     for (; p != NULL; p = p -> nextFile) {
-        if (p->count == max) {
-            printf("\t\t{\"%s\" : %d}\n",p -> file, p -> count);
+        if (p->count == max && p -> nextFile == NULL) {
+            fprintf(file, "\t\t{\"%s\" : %d}\n",p -> file, p -> count);
             p->count = -1;
         }
-        /* else if (p->count == max && p -> nextFile != NULL) {
-            printf("\t\t{\"%s\" : %d},\n",p -> file, p -> count);
+        else if (p->count == max && p -> nextFile != NULL) {
+            fprintf(file, "\t\t{\"%s\" : %d},\n",p -> file, p -> count);
             p->count = -1;
-        }*/
+        }
         //printFiles(list);
     }
-    printFiles(list);
+    printFiles(list, file);
     return;
 }
 
-void printList(SortedListPtr list) {
+void printList(SortedListPtr list, FILE * file) {
     list = list -> headWord;
     for (;list != NULL; list = list -> nextWord) {
-        printf("\t{\"%s\" : [\n",list -> word);
-        printFiles(list);
+        fprintf(file, "\t{\"%s\" : [\n",list -> word);
+        printFiles(list, file);
         if (list -> nextWord == NULL) {
-        printf("\t]}\n");
+        fprintf(file, "\t]}\n");
         break;
         }
-        printf("\t]},\n");
+        fprintf(file, "\t]},\n");
     }
     return;
 }

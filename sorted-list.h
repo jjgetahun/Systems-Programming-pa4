@@ -93,7 +93,7 @@ int SLInsert(SortedListPtr list, char* word);
 
 void SLInsertWord(SortedListPtr list, char* word, char* file);
 
-void printList(SortedListPtr list);
+void printList(SortedListPtr list, FILE * file);
 
 void cleanList(SortedListPtr list);
 
