@@ -31,6 +31,8 @@ void findDirs(DIR * dir, dirent entry, char * str, SortedListPtr root) {
         if (S_ISREG(sb.st_mode)) {
             char * str = tokenize(s);
             if (str == NULL) {
+                free(s);
+                s = NULL;
                 continue;
             }
             char * token = strtok(str, " ");
