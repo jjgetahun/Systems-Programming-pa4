@@ -9,15 +9,5 @@ tokenizer.o: tokenizer.c tokenizer.h
 sorted-list.o: sorted-list.c sorted-list.h
 	gcc -c sorted-list.c
 
-cav:
-	git add -A
-	git commit -m "Added stuff. - JCav"
-	git push
-
-get:
-	git add -A
-	git commit -m "Added stuff. - JGet"
-	git push
-
 clean:
 	rm -rf *.o *.a index
