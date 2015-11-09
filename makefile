@@ -1,7 +1,7 @@
 all: indexer
 
 indexer: indexer.c tokenizer.o sorted-list.o 
-	gcc -g -o indexer indexer.c tokenizer.o sorted-list.o
+	gcc -g -o index indexer.c tokenizer.o sorted-list.o
 
 libind.a: tokenizer.o avl.o
 	ar rv libind.a tokenizer.o avl.o
