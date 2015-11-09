@@ -35,4 +35,4 @@ get:
 	git push
 
 clean:
-	rm -rf *.o *.a indexer debug debug2 avl
+	rm -rf *.o *.a index debug debug2 avl
