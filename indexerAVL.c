@@ -12,14 +12,14 @@
 typedef struct dirent * dirent;
 typedef struct stat stat_;
 
-node * n = NULL;
+//node * n = NULL;
 //node * n;
 
 int compareString(char* s1, char* s2) {
     return strcmp(s1, s2);
 }
 
-void findDirs(DIR * dir, dirent entry, char * str) {
+void findDirs(DIR * dir, dirent entry, char * str, node * n) {
 
     //node *n = NULL;
     stat_ sb;
@@ -59,7 +59,7 @@ void findDirs(DIR * dir, dirent entry, char * str) {
                 DIR * newDir = opendir(s);
                 dirent newEntry;
                 //printf("DIR: %s\n", name);
-                findDirs(newDir, newEntry, s);
+                findDirs(newDir, newEntry, s,n);
                 closedir(newDir);
             }
             free(s);
@@ -74,6 +74,7 @@ int main (int argc, char ** argv) {
         extern int errno;
 
         stat_ sb;
+        node * n = NULL;
 
         if (argc != 2) { /*If there are not two arguments*/
             fprintf(stderr, "You must specify a single file or directory name on the command line.\n");
@@ -81,6 +82,7 @@ int main (int argc, char ** argv) {
         }
 
         else { /*If there are two arguments*/
+            while ((entry = readdir(dir)) != 0) {
             stat(argv[1], &sb);
 
             if (!S_ISREG(sb.st_mode) && !S_ISDIR(sb.st_mode)) { /*If the argument is not a file nor a directory*/
@@ -116,10 +118,11 @@ int main (int argc, char ** argv) {
                 if (S_ISDIR(sb.st_mode)) { /*If the argument is a directory*/
                     dir = opendir(argv[1]);
                     //printf("DIR: %s\n", argv[1]);
-                    findDirs(dir, entry, argv[1]);
+                    findDirs(dir, entry, argv[1], n);
                     closedir(dir);
                 }
             }
+        }
         }
         //printf("%s\n", n->name);
         //printf("%d\n", n->height);

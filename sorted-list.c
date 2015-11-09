@@ -245,12 +245,25 @@ void printList(SortedListPtr list, FILE * file) {
     return;
 }
 
+void cleanFiles(SortedListPtr list) {
+    SortedListPtr temp, temp1;
+    temp = list -> headFile;
+    while (temp != NULL) {
+        temp1 = temp;
+        temp = temp -> nextFile;
+        free (temp1 -> file);
+        free(temp1);
+    }
+    return;
+}
+
 void cleanList(SortedListPtr list) {
     SortedListPtr temp, temp1;
     temp = list -> headWord;
     while (temp != NULL) {
         temp1 = temp;
         temp = temp -> nextWord;
+        cleanFiles(temp1);
         free(temp1 -> word);
         free (temp1);
     }
