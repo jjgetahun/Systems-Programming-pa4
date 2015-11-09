@@ -206,26 +206,28 @@ void SLInsertWord(SortedListPtr list, char* word, char* fileName) {
 }*/
 
 void printFiles(SortedListPtr list) {
-    int max;
-    list = list->headFile;
-    SortedListPtr p = list;
+    int max = 0;
+    SortedListPtr p = list -> headFile;
     max = p->count;
     for (; p != NULL; p = p -> nextFile) {
         if (p->count > max)
             max = p->count;
     }
-    p = list;
+    if (max == -1)
+        return;
+    p = list -> headFile;
     for (; p != NULL; p = p -> nextFile) {
-        if (p->count == max && p -> nextFile == NULL) {
+        if (p->count == max) {
             printf("\t\t{\"%s\" : %d}\n",p -> file, p -> count);
-            break;
-        }
-        else if (p->count == max && p -> nextFile != NULL) {
-            printf("\t\t{\"%s\" : %d},\n",p -> file, p -> count);
             p->count = -1;
         }
-        printFiles(list);
+        /* else if (p->count == max && p -> nextFile != NULL) {
+            printf("\t\t{\"%s\" : %d},\n",p -> file, p -> count);
+            p->count = -1;
+        }*/
+        //printFiles(list);
     }
+    printFiles(list);
     return;
 }
 
