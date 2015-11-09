@@ -4,7 +4,6 @@
 #include <ctype.h>
 #include <dirent.h>
 #include <sys/stat.h>
-#include <errno.h>
 #include "tokenizer.h"
 #include "sorted-list.h"
 
@@ -30,14 +29,12 @@ void findDirs(DIR * dir, dirent entry, char * str, SortedListPtr root) {
         stat(s, &sb);
 
         if (S_ISREG(sb.st_mode)) {
-            //printf("FILE: %s\n", name);
             char * str = tokenize(s);
             if (str == NULL) {
                 continue;
             }
             char * token = strtok(str, " ");
             while (token != NULL) {
-                //printf("%s\n", token);
                 SLInsertWord(root,token,s);
                 token = strtok(NULL, " ");
             }
@@ -47,7 +44,6 @@ void findDirs(DIR * dir, dirent entry, char * str, SortedListPtr root) {
         else if (S_ISDIR(sb.st_mode)) {
             DIR * newDir = opendir(s);
             dirent newEntry;
-            //printf("DIR: %s\n", name);
             findDirs(newDir, newEntry, s, root);
             closedir(newDir);
         }
@@ -62,16 +58,17 @@ int main (int argc, char ** argv) {
     extern int errno;
     stat_ sb;
 
-    FILE * file = fopen(argv[1], "w");
+    FILE * file;
 
     SortedListPtr root = SLCreate(compareString);
 
     if (argc != 3) { /*If there are not three arguments*/
         fprintf(stderr, "You must give a file to be written to, and specify a single file or directory name on the command line.\n");
-        fclose(file);
         return 1;
     }
     else { /*If there are three arguments*/
+
+        file = fopen(argv[1], "w");
         stat(argv[1], &sb);
         if (!S_ISREG(sb.st_mode)) { /*If the second argument is not a file*/
             fprintf(stderr, "\"%s\"is not a file.\n", argv[1]);
@@ -87,11 +84,9 @@ int main (int argc, char ** argv) {
         else {
             if (S_ISREG(sb.st_mode)) { /*If the argument is a file*/
                 fprintf(file, "{\"list\" : [\n");
-                //printf("FILE: %s\n", argv[1]);
                 char * str = tokenize(argv[2]);
                 char * token = strtok(str, " ");
                 while (token != NULL) {
-                    //printf("%s\n", token);
                     SLInsertWord(root,token,argv[1]);
                     token = strtok(NULL, " ");
                 }
@@ -105,7 +100,6 @@ int main (int argc, char ** argv) {
             if (S_ISDIR(sb.st_mode)) { /*If the argument is a directory*/
                 fprintf(file, "{\"list\" : [\n");
                 dir = opendir(argv[2]);
-                //printf("DIR: %s\n", argv[1]);
                 findDirs(dir, entry, argv[2], root);
                 closedir(dir);
             }

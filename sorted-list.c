@@ -11,7 +11,6 @@
  */
 SortedListPtr SLCreate(CompareFuncT cf) {
     SortedListPtr SL = (SortedListPtr)malloc(sizeof(SortedList));
-    //SL->CompareFuncT = (CompareFuncT)malloc(sizeof(CompareFuncT));
     SL->CompareFuncT = cf;
     SL->headWord = NULL;
     SL->headFile = NULL;
@@ -25,7 +24,6 @@ SortedListPtr SLCreate(CompareFuncT cf) {
 
 SortedListPtr SLCreateWord(char* word, CompareFuncT cf) {
     SortedListPtr SL = (SortedListPtr)malloc(sizeof(SortedList));
-    //SL->CompareFuncT = (CompareFuncT)malloc(sizeof(CompareFuncT));
     SL->CompareFuncT = cf;
     SL->headWord = NULL;
     SL->headFile = NULL;
@@ -33,7 +31,6 @@ SortedListPtr SLCreateWord(char* word, CompareFuncT cf) {
     SL->nextFile = NULL;
     SL -> word = (char *) malloc(strlen(word) + 1);
     strcpy(SL -> word,word);
-    //SL-> word = word;
     SL-> file = NULL;
     SL-> count = 0; 
     return SL;
@@ -41,18 +38,14 @@ SortedListPtr SLCreateWord(char* word, CompareFuncT cf) {
 
 SortedListPtr SLCreateFile(char* file) {
     SortedListPtr SL = (SortedListPtr)malloc(sizeof(SortedList));
-    //SL->CompareFuncT = (CompareFuncT)malloc(sizeof(CompareFuncT));
     SL->CompareFuncT = NULL;
     SL->headWord = NULL;
     SL->headFile = NULL;
     SL->nextWord = NULL;
     SL->nextFile = NULL;
-    //SL -> word = (char *) malloc(strlen(word) + 1);
-    //strcpy(SL -> word,word);
     SL-> word = NULL;
     SL -> file = (char *) malloc(strlen(file) + 1);
     strcpy(SL -> file, file);
-    //SL-> file = NULL;
     SL-> count = 1; 
     return SL;
 }
@@ -62,12 +55,7 @@ SortedListPtr SLCreateFile(char* file) {
  * in descending order.
  */
 void SLInsertFile(SortedListPtr list, char* file) {
-    //SortedListPtr temp = (SortedListPtr) malloc(sizeof(SortedList));
-    //SortedListPtr temp = (SortedListPtr) malloc(sizeof(SortedList));
-    //SortedListPtr temp = SLCreateWord(word);
-    //temp -> word = (char *) malloc(strlen(word) + 1);
-    //strcpy(temp -> word,word);
-    
+       
     if (list -> headFile == NULL) {                             //No word inserted yet.
         SortedListPtr temp = SLCreateFile(file);
         list -> headFile = temp;
@@ -128,12 +116,7 @@ void SLInsertFile(SortedListPtr list, char* file) {
  * in descending order.
  */
 void SLInsertWord(SortedListPtr list, char* word, char* fileName) {
-    //SortedListPtr temp = (SortedListPtr) malloc(sizeof(SortedList));
-    //SortedListPtr temp = (SortedListPtr) malloc(sizeof(SortedList));
-    //SortedListPtr temp = SLCreateWord(word, list -> CompareFuncT);
-    //temp -> word = (char *) malloc(strlen(word) + 1);
-    //strcpy(temp -> word,word);
-    
+        
     if (list -> headWord == NULL) {                             //No word inserted yet.
         SortedListPtr temp = SLCreateWord(word, list -> CompareFuncT);
         list -> headWord = temp;            
@@ -193,18 +176,6 @@ void SLInsertWord(SortedListPtr list, char* word, char* fileName) {
     }
 }
 
-/*void printFiles (SortedListPtr list) {
-   list = list -> headFile;
-   for (;list != NULL;list = list -> nextFile) {
-       if (list -> nextFile == NULL) {
-           printf("\t\t{\"%s\" : %d}\n",list -> file, list -> count);
-           break;
-       }
-       printf("\t\t{\"%s\" : %d},\n",list -> file, list -> count);
-   }
-   return;
-}*/
-
 void printFiles(SortedListPtr list, FILE * file) {
     int max = 0;
     SortedListPtr p = list -> headFile;
@@ -225,7 +196,6 @@ void printFiles(SortedListPtr list, FILE * file) {
             fprintf(file, "\t\t{\"%s\" : %d},\n",p -> file, p -> count);
             p->count = -1;
         }
-        //printFiles(list);
     }
     printFiles(list, file);
     return;
@@ -267,7 +237,6 @@ void cleanList(SortedListPtr list) {
         free(temp1 -> word);
         free (temp1);
     }
-    //free (list-> CompareFuncT);
     free (list);
     return;
 }

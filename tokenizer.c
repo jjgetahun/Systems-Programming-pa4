@@ -202,7 +202,7 @@ char* tokenize(char * str) {
 
     while (*pc != '\0') {
         token = TKGetNextToken(tokenizer);
-        if (token == '\0'||token == NULL) {
+        if (token == NULL) {
             break;
         }
         lowerCase(token);
@@ -221,8 +221,10 @@ char* tokenize(char * str) {
 
     *temp = '\0';
 
-    if (finalString[0] == '\0')
+    if (finalString[0] == '\0') {
+        free(finalString);
         return NULL;
+    }
 
     return finalString;
 }
