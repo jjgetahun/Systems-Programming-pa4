@@ -10,4 +10,4 @@ sorted-list.o: sorted-list.c sorted-list.h
 	gcc -c sorted-list.c
 
 clean:
-	rm -rf *.o *.a index
+	rm -rf *.o index

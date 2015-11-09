@@ -77,8 +77,8 @@ int main (int argc, char ** argv) {
             fclose(file);
             return 1;
         }
-        stat(argv[2], &sb);
-        if (!S_ISREG(sb.st_mode) && !S_ISDIR(sb.st_mode)) { /*If the argument is not a file nor a directory*/
+        int check = stat(argv[2], &sb);
+        if ((!S_ISREG(sb.st_mode) && !S_ISDIR(sb.st_mode)) || check == -1) { /*If the argument is not a file nor a directory*/
             fprintf(stderr, "Could not open \"%s\" as a file or directory.\n", argv[2]);
             fclose(file);
             return 1;
