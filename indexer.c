@@ -36,8 +36,6 @@ void findDirs(DIR * dir, dirent entry, char * str, SortedListPtr root) {
                 continue;
             }
             char * token = strtok(str, " ");
-            if (strcmp(token,"hello") == 0)
-                printf(" ");
             while (token != NULL) {
                 //printf("%s\n", token);
                 SLInsertWord(root,token,s);
