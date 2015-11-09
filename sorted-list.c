@@ -74,7 +74,7 @@ void SLInsertFile(SortedListPtr list, char* file) {
         return;     
     }
     else {
-        int comp = list->CompareFuncT(file, list->headFile->file);
+        int comp = list->CompareFuncT((void*)file, (void*)list->headFile->file);
         if (comp < 0) {                             /*If the new word is less than the head's data*/
             SortedListPtr temp = SLCreateFile(file);
             temp->nextFile = list->headFile;
@@ -193,7 +193,7 @@ void SLInsertWord(SortedListPtr list, char* word, char* fileName) {
     }
 }
 
-void printFiles (SortedListPtr list) {
+/*void printFiles (SortedListPtr list) {
    list = list -> headFile;
    for (;list != NULL;list = list -> nextFile) {
        if (list -> nextFile == NULL) {
@@ -203,7 +203,24 @@ void printFiles (SortedListPtr list) {
        printf("\t\t{\"%s\" : %d},\n",list -> file, list -> count);
    }
    return;
-}
+}*/
+
+void printFiles(SortedListPtr list) {
+    int max;
+    list = list->headFile;
+    SortedListPtr p = list;
+    max = p->count;
+    for (; p != NULL; p = p -> nextFile) {
+        if (p->count > max)
+            max = p->count;
+    }
+    p = list;
+    for (; p != NULL; p = 
+
+
+            }
+
+        
 
 void printList(SortedListPtr list) {
     list = list -> headWord;
