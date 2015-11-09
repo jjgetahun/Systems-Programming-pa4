@@ -215,12 +215,19 @@ void printFiles(SortedListPtr list) {
             max = p->count;
     }
     p = list;
-    for (; p != NULL; p = 
-
-
-            }
-
-        
+    for (; p != NULL; p = p -> nextFile) {
+        if (p->count == max && p -> nextFile == NULL) {
+            printf("\t\t{\"%s\" : %d}\n",p -> file, p -> count);
+            break;
+        }
+        else if (p->count == max && p -> nextFile != NULL) {
+            printf("\t\t{\"%s\" : %d},\n",p -> file, p -> count);
+            p->count = -1;
+        }
+        printFiles(list);
+    }
+    return;
+}
 
 void printList(SortedListPtr list) {
     list = list -> headWord;
