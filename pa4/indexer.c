@@ -62,28 +62,44 @@ int main (int argc, char ** argv) {
 
     FILE * file;
 
-    SortedListPtr root = SLCreate(compareString);
+    SortedListPtr root;
 
     if (argc != 3) { /*If there are not three arguments*/
         fprintf(stderr, "You must give a file to be written to, and specify a single file or directory name on the command line.\n");
         return 1;
     }
     else { /*If there are three arguments*/
+        int check = stat(argv[1], &sb);
+        if (check != -1) { /*If the file exists*/
+            char answer;
+            printf("\"%s\" already exists. Press 0 to exit the program or 1 to overwrite it.\n", argv[1]);
+            scanf(" %c", &answer);
+            while (answer != '0' && answer != '1') {
+                printf("\"%c\" is not a valid input. Please enter 0 to exit the program or 1 to overwrite \"%s\"\n", answer, argv[1]);
+                scanf(" %c", &answer);
+            }
+            if (answer == '0') {
+                return 0;
+            }
+            if (answer == '1') {
 
+            }
+        }
         file = fopen(argv[1], "w");
-        stat(argv[1], &sb);
+        check = stat(argv[1], &sb);
         if (!S_ISREG(sb.st_mode)) { /*If the second argument is not a file*/
-            fprintf(stderr, "\"%s\"is not a file.\n", argv[1]);
+            fprintf(stderr, "\"%s\" is not a file.\n", argv[1]);
             fclose(file);
             return 1;
         }
-        int check = stat(argv[2], &sb);
-        if ((!S_ISREG(sb.st_mode) && !S_ISDIR(sb.st_mode)) || check == -1) { /*If the argument is not a file nor a directory*/
+        check = stat(argv[2], &sb);
+        if ((!S_ISREG(sb.st_mode) && !S_ISDIR(sb.st_mode)) || check == -1) { /*If the third argument is neither a file nor a directory or if the file/directory does not exist*/
             fprintf(stderr, "Could not open \"%s\" as a file or directory.\n", argv[2]);
             fclose(file);
             return 1;
         }
         else {
+            root = SLCreate(compareString);
             if (S_ISREG(sb.st_mode)) { /*If the argument is a file*/
                 fprintf(file, "{\"list\" : [\n");
                 char * str = tokenize(argv[2]);

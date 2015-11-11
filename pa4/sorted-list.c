@@ -18,7 +18,7 @@ SortedListPtr SLCreate(CompareFuncT cf) {
     SL->nextFile = NULL;
     SL-> word = NULL;
     SL-> file = NULL;
-    SL-> count = 0; 
+    SL-> count = 0;
     return SL;
 }
 
@@ -32,7 +32,7 @@ SortedListPtr SLCreateWord(char* word, CompareFuncT cf) {
     SL -> word = (char *) malloc(strlen(word) + 1);
     strcpy(SL -> word,word);
     SL-> file = NULL;
-    SL-> count = 0; 
+    SL-> count = 0;
     return SL;
 }
 
@@ -46,7 +46,7 @@ SortedListPtr SLCreateFile(char* file) {
     SL-> word = NULL;
     SL -> file = (char *) malloc(strlen(file) + 1);
     strcpy(SL -> file, file);
-    SL-> count = 1; 
+    SL-> count = 1;
     return SL;
 }
 /*
@@ -55,11 +55,11 @@ SortedListPtr SLCreateFile(char* file) {
  * in descending order.
  */
 void SLInsertFile(SortedListPtr list, char* file) {
-       
+
     if (list -> headFile == NULL) {                             //No word inserted yet.
         SortedListPtr temp = SLCreateFile(file);
         list -> headFile = temp;
-        return;     
+        return;
     }
     else {
         int comp = list->CompareFuncT((void*)file, (void*)list->headFile->file);
@@ -72,7 +72,7 @@ void SLInsertFile(SortedListPtr list, char* file) {
         else if (comp == 0) {
             list -> headFile -> count+=1;
             return;
-        }                                    
+        }
         else if (list->headFile->nextFile == NULL) {    /*If the head's word is less than the new object and there is nothing after the word*/
             SortedListPtr temp = SLCreateFile(file);
             list->headFile->nextFile = temp;
@@ -116,12 +116,12 @@ void SLInsertFile(SortedListPtr list, char* file) {
  * in descending order.
  */
 void SLInsertWord(SortedListPtr list, char* word, char* fileName) {
-        
+
     if (list -> headWord == NULL) {                             //No word inserted yet.
         SortedListPtr temp = SLCreateWord(word, list -> CompareFuncT);
-        list -> headWord = temp;            
+        list -> headWord = temp;
         SLInsertFile(list -> headWord,fileName);
-        return;     
+        return;
     }
     else {
         int comp = list->CompareFuncT(word, list->headWord->word);
