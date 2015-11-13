@@ -105,7 +105,7 @@ int main (int argc, char ** argv) {
                 char * str = tokenize(argv[2]);
                 char * token = strtok(str, " ");
                 while (token != NULL) {
-                    SLInsertWord(root,token,argv[1]);
+                    SLInsertWord(root,token,argv[2]);
                     token = strtok(NULL, " ");
                 }
                 free(str);
