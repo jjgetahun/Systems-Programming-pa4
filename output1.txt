@@ -1,0 +1,125 @@
+{"list" : [
+	{"a" : [
+		{"test1/tests/test6.txt" : 1}
+	]},
+	{"an" : [
+		{"test1/tests/test0.txt" : 2},
+		{"test1/tests/test1.txt" : 2}
+	]},
+	{"brown" : [
+		{"test1/tests/test1/test4.txt" : 1},
+		{"test1/tests/test1/text4.txt" : 1},
+		{"test1/tests/test3/test4.txt" : 1},
+		{"test1/tests/test4.txt" : 1},
+		{"test1/tests/test4/test4.txt" : 1}
+	]},
+	{"dog" : [
+		{"test1/tests/test1/test4.txt" : 1},
+		{"test1/tests/test1/text4.txt" : 1},
+		{"test1/tests/test3/test4.txt" : 1},
+		{"test1/tests/test4.txt" : 1},
+		{"test1/tests/test4/test4.txt" : 1}
+	]},
+	{"example0" : [
+		{"test1/tests/test1/test5.txt" : 3}
+	]},
+	{"example12" : [
+		{"test1/tests/test1/test5.txt" : 2}
+		{"test1/tests/test1.txt" : 1},
+	]},
+	{"example123" : [
+		{"test1/tests/test1/test5.txt" : 1}
+	]},
+	{"example1233" : [
+		{"test1/tests/test1/test5.txt" : 1}
+	]},
+	{"fox" : [
+		{"test1/tests/test1/test4.txt" : 1},
+		{"test1/tests/test1/text4.txt" : 1},
+		{"test1/tests/test3/test4.txt" : 1},
+		{"test1/tests/test4.txt" : 1},
+		{"test1/tests/test4/test4.txt" : 1}
+	]},
+	{"hello" : [
+		{"test1/tests/test1/test4.txt" : 1},
+		{"test1/tests/test1/test5.txt" : 1},
+		{"test1/tests/test1/text4.txt" : 1},
+		{"test1/tests/test3/test4.txt" : 1},
+		{"test1/tests/test4.txt" : 1},
+		{"test1/tests/test4/test4.txt" : 1},
+		{"test1/tests/test5.txt" : 1}
+	]},
+	{"hi" : [
+		{"test1/tests/test2/tests3/test8.txt" : 1}
+	]},
+	{"howdy" : [
+		{"test1/tests/test2/test7.txt" : 1}
+	]},
+	{"is" : [
+		{"test1/tests/test6.txt" : 1}
+	]},
+	{"it" : [
+		{"test1/tests/test2.txt" : 1}
+	]},
+	{"jumps" : [
+		{"test1/tests/test1/test4.txt" : 1},
+		{"test1/tests/test1/text4.txt" : 1},
+		{"test1/tests/test3/test4.txt" : 1},
+		{"test1/tests/test4.txt" : 1},
+		{"test1/tests/test4/test4.txt" : 1}
+	]},
+	{"lazy" : [
+		{"test1/tests/test1/test4.txt" : 1},
+		{"test1/tests/test1/text4.txt" : 1},
+		{"test1/tests/test3/test4.txt" : 1},
+		{"test1/tests/test4.txt" : 1},
+		{"test1/tests/test4/test4.txt" : 1}
+	]},
+	{"mail" : [
+		{"test1/tests/test1.txt" : 1}
+	]},
+	{"over" : [
+		{"test1/tests/test1/test4.txt" : 1},
+		{"test1/tests/test1/text4.txt" : 1},
+		{"test1/tests/test3/test4.txt" : 1},
+		{"test1/tests/test4.txt" : 1},
+		{"test1/tests/test4/test4.txt" : 1}
+	]},
+	{"partner" : [
+		{"test1/tests/test2/test7.txt" : 1}
+	]},
+	{"quick" : [
+		{"test1/tests/test1/text4.txt" : 3},
+		{"test1/tests/test1/test4.txt" : 1},
+		{"test1/tests/test3/test4.txt" : 1},
+		{"test1/tests/test4.txt" : 1},
+		{"test1/tests/test4/test4.txt" : 1}
+	]},
+	{"rutgers" : [
+		{"test1/tests/test1.txt" : 1}
+	]},
+	{"sdfh" : [
+		{"test1/tests/test3.txt" : 1}
+	]},
+	{"test" : [
+		{"test1/tests/test6.txt" : 1}
+	]},
+	{"the" : [
+		{"test1/tests/test4.txt" : 3},
+		{"test1/tests/test1/test4.txt" : 2},
+		{"test1/tests/test1/text4.txt" : 2},
+		{"test1/tests/test3/test4.txt" : 2},
+		{"test1/tests/test4/test4.txt" : 2}
+	]},
+	{"this" : [
+		{"test1/tests/test1.txt" : 1},
+		{"test1/tests/test6.txt" : 1}
+	]},
+	{"world" : [
+		{"test1/tests/test1/test4.txt" : 1},
+		{"test1/tests/test1/text4.txt" : 1},
+		{"test1/tests/test3/test4.txt" : 1},
+		{"test1/tests/test4.txt" : 1},
+		{"test1/tests/test4/test4.txt" : 1}
+	]}
+]}
